@@ -45,11 +45,12 @@ devtools::install_github("vdeminstitute/ERT")
 This fork of the ERT package supports localization for plot labels and country names in English (`"en"`) and Spanish (`"es"`). You can set the language for labels and country names using the `lang` argument in plotting functions. It is not mandatory to include the `lang` argument, the default is set to be English (`"en"`).
 
 **Example:**
-```r
+```
 #1. Plot all episodes of democratization and autocratization in Spanish
 plot_all(lang = "es")
 
 #2. Plot the democratization and autocratization episodes for Venezuela in Spanish
 plot_episodes_test(country = c("Venezuela"), years = c(1900, 2023), lang = "es")```
+```
 
 For more details, see the documentation. Feel free to reach out <hi@pablohernandezb.dev> if you have any recommendations, comments or questions!
