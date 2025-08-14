@@ -517,10 +517,16 @@ get_label <- function(key, lang = "en") {
 }
 
 get_country_name <- function(name, lang = "en") {
+  key <- gsub("[ -]", "_", name)
   if (!lang %in% names(country_names)) lang <- "en"
-  translated <- country_names[[lang]][[name]]
-  if (is.null(translated)) return(name)
-  translated
+  if (!is.null(country_names[[lang]][[key]])) {
+    return(country_names[[lang]][[key]])
+  }
+  # Try direct match if key not found
+  if (!is.null(country_names[[lang]][[name]])) {
+    return(country_names[[lang]][[name]])
+  }
+  return(name)
 }
 
 plot_episodes <- function(years = c(1900, 2023),
@@ -640,7 +646,7 @@ plot_episodes <- function(years = c(1900, 2023),
       xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,1) +
       theme_bw() +
       guides(color = guide_legend(override.aes = list(size = 0))) +
-      ggtitle(sprintf("%s", get_country_name(country, lang)))
+      ggtitle(get_country_name(country, lang))
     
     if (isTRUE(length(which(eps_year$ep_type == "dem_ep_id")) > 0)){
       
@@ -687,7 +693,7 @@ plot_episodes <- function(years = c(1900, 2023),
       scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
       xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,1) +
       theme_bw() +
-      ggtitle(sprintf("%s", get_country_name(country, lang)))
+      ggtitle(get_country_name(country, lang))
     
     p
     
