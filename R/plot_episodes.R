@@ -122,7 +122,7 @@ localizations <- list(
     stop_year_turn_format = "Error: 'year_turn' debe ser un valor numérico",
     stop_cum_turn_format = "Error: 'cum_turn' debe ser un valor numérico",
     stop_tolerance_format = "Error: 'tolerance' debe ser un valor numérico",
-    outcome_censored = "Resultado censurado",
+    outcome_censored = "Resultado truncado",
     outcome_dem_transition = "Transición democrática",
     outcome_dem_preempted = "Transición democrática prevenida",
     outcome_dem_stabilized = "Autocracia electoral estabilizada",
@@ -132,7 +132,7 @@ localizations <- list(
     outcome_aut_preempted = "Ruptura democrática prevenida",
     outcome_aut_diminished = "Democracia disminuida",
     outcome_aut_averted = "Regresión evitada",
-    outcome_aut_regressed = "Autocracia regresada"
+    outcome_aut_regressed = "Autocracia regresiva"
   )
 )
 
