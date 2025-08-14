@@ -46,6 +46,7 @@
 #' This could lead to large changes in the composition of episodes. 
 #' We set the default to 5 years because this is the typical amount for an electoral cycle for most countries.}
 #'
+#' @param lang Language for labels. Default is "en" (English).
 #' @return The output of this function is a [ggplot2:ggplot()] object with the number/share of autocratization episodes per year.
 
 #' @import ggplot2
@@ -53,13 +54,42 @@
 #' 
 #' @export
 
+localizations <- list(
+  en = list(
+    year = "Year",
+    autocratization = "Autocratization",
+    democratization = "Democratization",
+    number_countries = "Number of Countries",
+    countries_percent = "Countries (%)",
+    no_data = "Error: Data not available for time range",
+    no_episodes = "No episodes during selected period."
+  ),
+  es = list(
+    year = "Año",
+    autocratization = "Autocratización",
+    democratization = "Democratización",
+    number_countries = "Número de países",
+    countries_percent = "Países (%)",
+    no_data = "Error: Datos no disponibles para el rango de tiempo",
+    no_episodes = "No hay episodios durante el período seleccionado."
+  )
+)
+
+get_label <- function(key, lang = "es") {
+  if (!lang %in% names(localizations)) lang <- "en"
+  label <- localizations[[lang]][[key]]
+  if (is.null(label)) return(key)
+  label
+}
+
 plot_all <- function(abs = T,
                      years = c(1900, 2023),
                      start_incl  = 0.01,
                      cum_incl  = 0.1,
                      year_turn = 0.03,
                      cum_turn = 0.1,
-                     tolerance = 5) {
+                     tolerance = 5,
+                     lang = "en") {
   
   eps <- ERT::get_eps(data = ERT::vdem,
                       start_incl = start_incl,
@@ -85,12 +115,12 @@ plot_all <- function(abs = T,
   
   #perhaps this is redundant 
   if(min(years)<min(ERT::vdem$year) | max(years)>max(ERT::vdem$year))
-    stop("Error: Data not available for time range")
+    get_label("no_data", lang)
   
   if (isTRUE(abs)) {
     eps_year <- eps %>%
       dplyr::filter(between(year, min(years), max(years))) %>%
-      {if(nrow(.) == 0) stop("No episodes during selected time period. No plot generated") else .} %>% 
+      {if(nrow(.) == 0) stop(get_label("no_episodes", lang)) else .} %>% 
       dplyr::group_by(year) %>%
       dplyr::summarise(dem_eps = sum(dem_ep),
                        aut_eps = sum(aut_ep)) %>%
@@ -108,14 +138,14 @@ plot_all <- function(abs = T,
   p <-  ggplot2::ggplot(data = eps_year, aes(x = year, y = countries, group = ep_type, linetype = ep_type)) +
     geom_line() +
     scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
-    scale_linetype(name = "", breaks = c("aut_eps", "dem_eps"), labels = c("Autocratization", "Democratization")) +
-    xlab("Year") +
+    scale_linetype(name = "", breaks = c("aut_eps", "dem_eps"), labels = c(get_label("autocratization", lang), get_label("democratization", lang))) +
+    xlab(get_label("year", lang)) +
     theme_classic() +
     theme(legend.position = "bottom")
   
   if (isTRUE(abs)) {
-    p +  ylab("Number of Countries")
+    p +  ylab(get_label("number_countries", lang))
   }  else {
-    p +  ylab("Countries (%)")
+    p +  ylab(get_label("countries_percent", lang))
   }
 }
