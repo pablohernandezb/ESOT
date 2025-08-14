@@ -1,7 +1,6 @@
 
 
-An R package to load, explore, and work with the Episodes of Regime Transformation (ERT) dataset - a project of the [V-Dem Institute](https://www.v-dem.net/).
-
+An R package to load, explore, and work with the Episodes of Regime Transformation (ERT) dataset - a project of the [V-Dem Institute](https://www.v-dem.net/). This forked version includes support for localization in Spanish (`"es"`).
 
 ## Episodes of Regime Transformation (ERT) ##
 
@@ -30,7 +29,7 @@ An R package to load, explore, and work with the Episodes of Regime Transformati
 # First, you need to have the devtools package installed
 install.packages("devtools")
 # now, install the ERT package directly from GitHub
-devtools::install_github("vdeminstitute/ERT")
+devtools::install_github("pablohernandezb/ERT")
 
 # NOTE: make sure you have an updated R version and
 # - since the package is a development version - 
@@ -44,12 +43,17 @@ devtools::install_github("vdeminstitute/ERT")
 
 This fork of the ERT package supports localization for plot labels and country names in English (`"en"`) and Spanish (`"es"`). You can set the language for labels and country names using the `lang` argument in plotting functions. It is not mandatory to include the `lang` argument, the default is set to be English (`"en"`).
 
+#### Internal Functions ####
+
+* `get_label`: Retrieve localized labels for plot elements and messages, supporting multiple languages.
+* `get_country_name`: Retrieve localized country names for use in plots and summaries.
+
 **Example:**
 ```
-#1. Plot all episodes of democratization and autocratization in Spanish
+# Plot all episodes of democratization and autocratization in Spanish
 plot_all(lang = "es")
 
-#2. Plot the democratization and autocratization episodes for Venezuela in Spanish
+# Plot the democratization and autocratization episodes for Venezuela in Spanish
 plot_episodes_test(country = c("Venezuela"), years = c(1900, 2023), lang = "es")```
 ```
 
