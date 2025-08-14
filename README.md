@@ -54,7 +54,7 @@ This fork of the ERT package supports localization for plot labels and country n
 plot_all(lang = "es")
 
 # Plot the democratization and autocratization episodes for Venezuela in Spanish
-plot_episodes_test(country = c("Venezuela"), years = c(1900, 2023), lang = "es")```
+plot_episodes_test(country = c("Venezuela"), years = c(1900, 2023), lang = "es")
 ```
 
 For more details, see the documentation. Feel free to reach out <hi@pablohernandezb.dev> if you have any recommendations, comments or questions!
