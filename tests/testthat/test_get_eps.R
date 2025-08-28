@@ -1,7 +1,7 @@
 # ==========================================================================
 # Test get_eps() function
 # ==========================================================================
-context("Produce data frame with the data for ERT")
+context("Produce data frame with the data for ESOT")
 
 #
 # Let's test data inputs for the first argument because the rest is already
@@ -10,14 +10,14 @@ context("Produce data frame with the data for ERT")
 
 col_names <- c("country_name", "country_id", "country_text_id",
 	"year", "codingstart", "codingend",
-	"v2x_polyarchy", "gapstart1", "gapstart2", "gapstart3",
+	"v2clstown", "gapstart1", "gapstart2", "gapstart3",
 	"gapend1", "gapend2", "gapend3", "v2x_regime",
 	"v2elasmoff_ord", "v2eltype_0", "v2eltype_4",
-	"v2eltype_6","v2x_polyarchy_codelow","v2x_polyarchy_codehigh")
+	"v2eltype_6","v2clstown_codelow","v2clstown_codehigh")
 
 new_cols <- c("country_id", "country_text_id", "country_name",
-	"year", "v2x_regime", "v2x_polyarchy", "v2x_polyarchy_codelow",
-	"v2x_polyarchy_codehigh", "reg_start_year", "reg_end_year",
+	"year", "v2x_regime", "v2clstown", "v2clstown_codelow",
+	"v2clstown_codehigh", "reg_start_year", "reg_end_year",
 	"reg_id", "reg_type", "reg_trans", "founding_elec", "row_regch_event",
 	"row_regch_censored", "dem_ep", "dem_ep_id", "dem_ep_start_year",
 	"dem_ep_end_year", "dem_pre_ep_year", "dem_ep_termination",
@@ -52,7 +52,7 @@ test_that("Variables from script are in the dataset", {
 	})
 
 df$v2x_regime[1:3] <- NA_real_
-df$v2x_polyarchy[4:5] <- NA_real_
+df$v2clstown[4:5] <- NA_real_
 data <- vdemdata::vdem
 
 test_that("Data dimensions", {
@@ -63,19 +63,19 @@ test_that("Data dimensions", {
 	})
 
 test_that("Check column type output", {
-	expect_equal(class(get_eps()$v2x_polyarchy), class(vdemdata::vdem$v2x_polyarchy))
+	expect_equal(class(get_eps()$v2clstown), class(vdemdata::vdem$v2clstown))
 	expect_equal(class(get_eps()$v2x_regime), class(vdemdata::vdem$v2x_regime))
-	expect_equal(class(get_eps()$v2x_polyarchy_codelow), class(vdemdata::vdem$v2x_polyarchy_codelow))
-	expect_equal(class(get_eps()$v2x_polyarchy_codehigh), class(vdemdata::vdem$v2x_polyarchy_codehigh))
+	expect_equal(class(get_eps()$v2clstown_codelow), class(vdemdata::vdem$v2clstown_codelow))
+	expect_equal(class(get_eps()$v2clstown_codehigh), class(vdemdata::vdem$v2clstown_codehigh))
 	})
 
 test_that("Missingness in new variables", {
 	expect_equal(sum(is.na(get_eps(data = df)$v2x_regime)), sum(is.na(df$v2x_regime[df$year >= 1900])))
-	expect_equal(sum(is.na(get_eps(data = df)$v2x_polyarchy)), sum(is.na(df$v2x_polyarchy)))
+	expect_equal(sum(is.na(get_eps(data = df)$v2clstown)), sum(is.na(df$v2clstown)))
 	})
 
 test_that("Equal values in input and output", {
-	expect_equal(get_eps(data = df)$v2x_polyarchy, df[df$year >= 1900,"v2x_polyarchy"])
+	expect_equal(get_eps(data = df)$v2clstown, df[df$year >= 1900,"v2clstown"])
 	expect_equal(get_eps(data = df)$v2x_regime, df[df$year >= 1900,"v2x_regime"])	
 	})
 

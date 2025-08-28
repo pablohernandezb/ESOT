@@ -3,21 +3,21 @@
 
 #' Identify sequences of potential autocratization episodes
 #'
-#' This is a subfunction (c++) of ERT::get_eps see the
-#' documentation of ERT::get_aut (?get_eps) for details on
+#' This is a subfunction (c++) of ESOT::get_eps see the
+#' documentation of ESOT::get_aut (?get_eps) for details on
 #' parameters, etc.
 #'
-find_seqs_aut <- function(v, r, t, start_incl = -0.01, year_turn = 0.03, cum_turn = 0.1, tolerance = 5L) {
-    .Call('_ERT_find_seqs_aut', PACKAGE = 'ERT', v, r, t, start_incl, year_turn, cum_turn, tolerance)
+find_seqs_aut <- function(v, r, t, start_incl = -0.04, year_turn = 0.12, cum_turn = 0.4, tolerance = 5L) {
+    .Call('_ESOT_find_seqs_aut', PACKAGE = 'ESOT', v, r, t, start_incl, year_turn, cum_turn, tolerance)
 }
 
 #' Identify sequences of potential democratization episodes
 #'
-#' This is a subfunction (c++) of ERT::get_eps see the
-#' documentation of ERT::get_eps (?get_eps) for details on
+#' This is a subfunction (c++) of ESOT::get_eps see the
+#' documentation of ESOT::get_eps (?get_eps) for details on
 #' parameters, etc.
 #'
-find_seqs_dem <- function(v, r, t, start_incl = 0.01, year_turn = -0.03, cum_turn = -0.1, tolerance = 5L) {
-    .Call('_ERT_find_seqs_dem', PACKAGE = 'ERT', v, r, t, start_incl, year_turn, cum_turn, tolerance)
+find_seqs_dem <- function(v, r, t, start_incl = 0.04, year_turn = -0.12, cum_turn = -0.4, tolerance = 5L) {
+    .Call('_ESOT_find_seqs_dem', PACKAGE = 'ESOT', v, r, t, start_incl, year_turn, cum_turn, tolerance)
 }
 

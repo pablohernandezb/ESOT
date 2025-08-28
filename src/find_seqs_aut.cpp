@@ -1,10 +1,10 @@
 /*
  * Rcpp function for identifying sequences of potential
- * autocratization episodes.
+ * statization episodes.
  *
  * NOTE: the function argument "cum_incl" is only set and implemented
  * in the R script and checks if the potential episodes are "manifest"
- * (cf. Wilson et al. 2020)
+ * 
  */
 
 #include <Rcpp.h>
@@ -13,19 +13,19 @@
 using namespace Rcpp;
 using namespace std;
 
-//' Identify sequences of potential autocratization episodes
+//' Identify sequences of potential statization episodes
 //'
-//' This is a subfunction (c++) of ERT::get_eps see the
-//' documentation of ERT::get_aut (?get_eps) for details on
+//' This is a subfunction (c++) of ESOT::get_eps see the
+//' documentation of ESOT::get_aut (?get_eps) for details on
 //' parameters, etc.
 //'
 //[[Rcpp::export]]
 NumericVector find_seqs_aut(NumericVector v,
                             NumericVector r,
                             NumericVector t,
-                            double start_incl = -0.01,
-                            double year_turn = 0.03,
-                            double cum_turn = 0.1,
+                            double start_incl = -0.04,
+                            double year_turn = 0.12,
+                            double cum_turn = 0.4,
                             int tolerance = 5) {
 
   if (v.size() != r.size() || v.size() != t.size())
@@ -86,11 +86,14 @@ NumericVector find_seqs_aut(NumericVector v,
     //  - Reach tolerance w/o another inc
     //  - Hit a NA
     //  - Decrease < cum_turn
-    //  - Revert to v2x_regime == 3 (return to liberal democracy)
+    //  - Revert to v2x_regime == 3 (return to liberal democracy) [PCHB: ELIMINATING THIS]
     //
     // NOTE: also here mirrored!
+    //if (i == d_len - 1 || tolerance_count == tolerance || NumericVector::is_na(d[i]) ||
+    //    d[i] > year_turn|| change > cum_turn || (r2[i] > 0 && r[i+1] == 3) ||
+    //    t[i+1] == 1) {
     if (i == d_len - 1 || tolerance_count == tolerance || NumericVector::is_na(d[i]) ||
-        d[i] > year_turn|| change > cum_turn || (r2[i] > 0 && r[i+1] == 3) ||
+        d[i] > year_turn|| change > cum_turn ||
         t[i+1] == 1) {
       int head = q.front(), tail;
 

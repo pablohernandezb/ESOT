@@ -1,5 +1,5 @@
 #
-#   Create the ERT data
+#   Create the ESOT data
 #   
 
 devtools::load_all()

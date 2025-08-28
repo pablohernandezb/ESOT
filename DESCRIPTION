@@ -1,15 +1,11 @@
-Package: ERT
+Package: ESOT
 Type: Package
-Title: Provides the most recent version of the Episodes of Regime Transformation dataset
-Version: 15.0
-Authors@R: c(person("Seraphine", "Maerz", email = "maerz@soz.uni-frankfurt.de", role = c("aut", "cre")),
-             person("Amanda", "Edgell", email = "amanda.edgell@v-dem.net", role = c("aut")),
-             person("Joshua", "Krusell", email = "js.shirin@gmail.com", role = c("aut")),
-             person("Laura", "Maxwell", email = "laura.maxwell@v-dem.net", role = c("aut")),
-             person("Sebastian", "Hellmeier", email = "sebastian.hellmeier@v-dem.net", role = c("aut")))
-Maintainer: Seraphine Maerz <maerz@soz.uni-frankfurt.de>
-Description: This package contains the Episodes of Regime Transformation (ERT) dataset and
-             offers some additional functions to work with ERT.
+Title: Provides the most recent version of the Episodes of State Ownership dataset
+Version: 1.0
+Authors@R: c(person("Pablo", "Hernandez-Borges", email = "hi@pablohernandezb.dev", role = c("aut", "cre")))
+Maintainer: Pablo Hernandez Borges <hi@pablohernandezb.dev>
+Description: This package contains the Episodes of State Ownership Transformation (ESOT) dataset and
+             offers some additional functions to work with ESOT.
 Depends: R (>= 3.5.0)
 Imports:
   Rcpp,

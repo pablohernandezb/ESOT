@@ -1,10 +1,9 @@
 /*
  * Rcpp function for identifying sequences of potential
- * democratization episodes.
+ * privatization episodes.
  *
  * NOTE: the function argument "cum_incl" is only set and implemented
  * in the R script and checks if potential episodes are "manifest"
- * (cf. Wilson et al. 2020)
  */
 
 #include <Rcpp.h>
@@ -13,7 +12,7 @@
 using namespace Rcpp;
 using namespace std;
 
-//' Identify sequences of potential democratization episodes
+//' Identify sequences of potential privatization episodes
 //'
 //' This is a subfunction (c++) of ERT::get_eps see the
 //' documentation of ERT::get_eps (?get_eps) for details on
@@ -23,9 +22,9 @@ using namespace std;
 NumericVector find_seqs_dem(NumericVector v,
                             NumericVector r,
                             NumericVector t,
-                            double start_incl = 0.01,
-                            double year_turn = -0.03,
-                            double cum_turn = -0.1,
+                            double start_incl = 0.04,
+                            double year_turn = -0.12,
+                            double cum_turn = -0.4,
                             int tolerance = 5) {
   if (v.size() != r.size() || v.size() != t.size())
     stop("Mismatched vector lengths");
@@ -82,11 +81,14 @@ NumericVector find_seqs_dem(NumericVector v,
     //  - Reach tolerance w/o another inc
     //  - Hit a NA
     //  - Decrease < cum_turn
-    //  - Revert to v2x_regime == 0 (return to closed autocracy)
+    //  - Revert to v2x_regime == 0 (return to closed autocracy) [PCHB: ELIMINATING THIS]
+    //if (i == d_len - 1 || tolerance_count == tolerance || NumericVector::is_na(d[i]) ||
+    //    d[i] < year_turn|| change < cum_turn || (r2[i] < 0 && r[i+1] == 0) ||
+    //    t[i+1] == -1) {
+    //  int head = q.front(), tail;
     if (i == d_len - 1 || tolerance_count == tolerance || NumericVector::is_na(d[i]) ||
-        d[i] < year_turn|| change < cum_turn || (r2[i] < 0 && r[i+1] == 0) ||
+        d[i] < year_turn|| change < cum_turn ||
         t[i+1] == -1) {
-      int head = q.front(), tail;
 
       // Include stasis period
       if (tolerance_count > 0)

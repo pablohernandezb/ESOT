@@ -1,11 +1,11 @@
-#' Plot Episodes of Regime Transformation (ERT) over time.
+#' Plot Episodes of State Ownership Transformation (ESOT) over time.
 #'
-#' `plot_episodes` plots Episodes of Regime Transformation (ERT) over time for a selected country and a selected time frame.
+#' `plot_episodes` plots Episodes of State Ownership Transformation (ESOT) over time for a selected country and a selected time frame.
 #'
 #' This function is a wrapper for [ggplot2:ggplot()] and produces a plot that shows
 #' democratization and autocratization episodes for a selected country over time.
 #' The legend includes information on the start and end data of each episode,
-#' as well as the episode outcome. The function calls the [ERT:get_eps()] function
+#' as well as the episode outcome. The function calls the [ESOT:get_eps()] function
 #' to identify episodes.
 #'
 #' @param years Vector with two numeric values indicating the minimum and maximum year to be plotted.
@@ -536,10 +536,10 @@ plot_episodes <- function(years = c(1900, 2023),
                           year_turn = 0.03,
                           cum_turn = 0.1,
                           tolerance = 5,
-                          data = ERT::vdem,
+                          data = ESOT::vdem,
                           lang = "en") {
   
-  eps <- ERT::get_eps(data = data,
+  eps <- ESOT::get_eps(data = data,
                       start_incl = start_incl,
                       cum_incl = cum_incl,
                       year_turn = year_turn,
@@ -581,7 +581,7 @@ plot_episodes <- function(years = c(1900, 2023),
     stop(get_label("stop_tolerance_format", lang))
   
   
-  year <- country_name <- dem_ep <- aut_ep <- overlap_eps <- country_text_id <- v2x_polyarchy <-
+  year <- country_name <- dem_ep <- aut_ep <- overlap_eps <- country_text_id <- v2clstown <-
     ep_type <- episode <- vdem <- aut_ep_start_year <- aut_ep_end_year <-
     dem_ep_start_year <- dem_ep_end_year <- aut_pre_ep_year <-
     dem_pre_ep_year <- episode_id <- countries <- NULL
@@ -594,7 +594,7 @@ plot_episodes <- function(years = c(1900, 2023),
     eps_year <- eps_year %>% 
       dplyr::mutate(overlap_eps = ifelse(!is.na(aut_ep_id) & !is.na(dem_ep_id), "overlaps", NA)) %>% 
       tidyr::pivot_longer(cols = c(aut_ep_id, dem_ep_id, overlap_eps), names_to = "ep_type", values_to = "episode") %>%
-      dplyr::select(country_name, country_text_id, year, v2x_polyarchy, ep_type, episode,
+      dplyr::select(country_name, country_text_id, year, v2clstown, ep_type, episode,
                     aut_ep_start_year, aut_ep_end_year, aut_ep_outcome,
                     dem_ep_start_year, dem_ep_end_year,
                     aut_pre_ep_year, dem_pre_ep_year, dem_ep_outcome,
@@ -628,15 +628,15 @@ plot_episodes <- function(years = c(1900, 2023),
     polyarchy <- eps %>%
       filter(country_name == country, between(year, min(years), max(years))) %>%
       ungroup() %>%
-      select(year, v2x_polyarchy)
+      select(year, v2clstown)
     
     if(max(eps_year$overlap_eps) > 1) {
       print(get_label("warning_overlap", lang))
     }
     
     p <-   ggplot2::ggplot() +
-      geom_line(data = eps_year, aes(group = episode_id, color = episode_id, linetype = ep_type,x = year, y = v2x_polyarchy)) +
-      geom_line(data = polyarchy, aes(x = year, y = v2x_polyarchy), alpha = 0.35) +
+      geom_line(data = eps_year, aes(group = episode_id, color = episode_id, linetype = ep_type,x = year, y = v2clstown)) +
+      geom_line(data = polyarchy, aes(x = year, y = v2clstown), alpha = 0.35) +
       scale_colour_grey(breaks = levels(factor(eps_year$episode_id[eps_year$episode_id!="overlaps"])),
                         name = get_label("episode", lang), start = 0.01, end = 0.01) +
       scale_linetype_manual(name = get_label("episode_type", lang), breaks = c("aut_ep_id", "dem_ep_id", "overlaps"),
@@ -651,14 +651,14 @@ plot_episodes <- function(years = c(1900, 2023),
     if (isTRUE(length(which(eps_year$ep_type == "dem_ep_id")) > 0)){
       
       if (any(eps_year$year%in%c(eps_year$dem_ep_start_year))) {
-        p <- p +  geom_point(data = eps_year, aes(x = year, y = ifelse(year == dem_ep_start_year, v2x_polyarchy, NA)), shape = 2, alpha = 0.75) 
+        p <- p +  geom_point(data = eps_year, aes(x = year, y = ifelse(year == dem_ep_start_year, v2clstown, NA)), shape = 2, alpha = 0.75) 
         
       } else {
         p
       }
       
       if (any(eps_year$year%in%c(eps_year$dem_ep_end_year))) {
-        p <- p +geom_point(data = eps_year, aes(x = year, y = ifelse(year == dem_ep_end_year, v2x_polyarchy, NA)), shape = 17, alpha = 0.75)
+        p <- p +geom_point(data = eps_year, aes(x = year, y = ifelse(year == dem_ep_end_year, v2clstown, NA)), shape = 17, alpha = 0.75)
       } else {
         p
       }
@@ -667,12 +667,12 @@ plot_episodes <- function(years = c(1900, 2023),
     if (isTRUE(length(which(eps_year$ep_type == "aut_ep_id")) > 0)) {
       
       if (any(eps_year$year%in%c(eps_year$aut_ep_start_year))){
-        p <- p +  geom_point(data = eps_year, aes(x = year, y = ifelse(year == aut_ep_start_year, v2x_polyarchy, NA)), shape = 1, alpha = 0.75) 
+        p <- p +  geom_point(data = eps_year, aes(x = year, y = ifelse(year == aut_ep_start_year, v2clstown, NA)), shape = 1, alpha = 0.75) 
       } else {
         p
       }
       if (any(eps_year$year%in%c(eps_year$aut_ep_end_year))){
-        p<- p+ geom_point(data = eps_year, aes(x = year, y = ifelse(year == aut_ep_end_year, v2x_polyarchy, NA)), shape = 16, alpha = 0.75)
+        p<- p+ geom_point(data = eps_year, aes(x = year, y = ifelse(year == aut_ep_end_year, v2clstown, NA)), shape = 16, alpha = 0.75)
       } else {
         p
       }
@@ -686,10 +686,10 @@ plot_episodes <- function(years = c(1900, 2023),
     polyarchy <- eps %>%
       filter(country_name == country, between(year, min(years), max(years))) %>%
       ungroup() %>%
-      select(year, v2x_polyarchy)
+      select(year, v2clstown)
     
     p <-ggplot2::ggplot() +
-      geom_line(data = polyarchy, aes(x = as.numeric(year), y = v2x_polyarchy), alpha = 0.35) +
+      geom_line(data = polyarchy, aes(x = as.numeric(year), y = v2clstown), alpha = 0.35) +
       scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
       xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,1) +
       theme_bw() +

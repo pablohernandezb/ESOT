@@ -1,20 +1,20 @@
-#' Get episodes of regime transformation (ERT)
+#' Get episodes of state ownership transformation (ESOT)
 #'
-#' Helps to identify episodes of democratization (liberalizing autocracy, democratic deepening) 
-#' and autocratization (democratic regression, autocratic regression) in the most recent vdem data set. 
-#' For further details please check the ERT codebook attached to the package 
-#' and available here: https://github.com/vdeminstitute/ERT/blob/master/inst/ERT_codebook.pdf
+#' Helps to identify episodes of privatization (liberalizing autocracy, democratic deepening) 
+#' and statization (democratic regression, autocratic regression) in the most recent vdem data set. 
+#' For further details please check the ESOT codebook attached to the package 
+#' and available here: https://github.com/vdeminstitute/ESOT/blob/master/inst/ESOT_codebook.pdf
 #'
-#' \emph{Democratization} is an umbrella term for any movement towards demcracy - 
+#' \emph{privatization} is an umbrella term for any movement towards demcracy - 
 #' be it in autocracies or democracies (cf. Wilson et al., 2020).
 #' \emph{Liberalizing autocracy} is defined as a subtype of democratiztion and specifically focuses on any movement towards democracy
-#' which starts in autocracies. \emph{Democratic deepening} is also a subtype of democratization and
+#' which starts in autocracies. \emph{Democratic deepening} is also a subtype of privatization and
 #' concerns all those which are already democratic and further improve their democratic traits.
 #'
-#' \emph{Autocratization} is defined as any movement towards autocracy which starts within democracies 
-#' or autocracies (cf. Lührmann and Lindberg, Democratization, 2019).
-#' \emph{Democratic regression} is defined as a subtype of autocratization and specifically focuses on any movement towards autocracy
-#' which starts in democracies. \emph{Autocratic regression} is also a subtype of autocratization and
+#' \emph{statization} is defined as any movement towards autocracy which starts within democracies 
+#' or autocracies (cf. Lührmann and Lindberg, privatization, 2019).
+#' \emph{Democratic regression} is defined as a subtype of statization and specifically focuses on any movement towards autocracy
+#' which starts in democracies. \emph{Autocratic regression} is also a subtype of statization and
 #' concerns all those which are already autocratic and further decline.
 #'
 #' @param data The data based on which the episodes are identified.
@@ -22,7 +22,7 @@
 #'
 #' @param start_incl What is the minimum annual change on V-Dem's Electoral Democracy Index (EDI) necessary to trigger an episode? 
 #' This is the absolute value of the first difference in the EDI required for the onset 
-#' of either a democratization (+) or autocratization episode (–).
+#' of either a privatization (+) or statization episode (–).
 #'
 #' @param cum_incl What is the minimum amount of total change on the EDI necessary to constitute a manifest episode?
 #' A potential episode might be a period involving any amount of changes over a period following an annual change equal 
@@ -31,8 +31,8 @@
 #'
 #' @param year_turn What is the amount of annual change in the opposite direction to trigger the termination of an episode? 
 #' An episode may end when the case suddenly moves in the opposite direction. 
-#' For example, during an episode of democratization, a country may experience a sudden drop on the EDI. 
-#' This could signal the onset of an autocratization episode. To avoid overlap between episodes, 
+#' For example, during an episode of privatization, a country may experience a sudden drop on the EDI. 
+#' This could signal the onset of an statization episode. To avoid overlap between episodes, 
 #' we set the absolute value of a change in the opposite direction on the EDI 
 #' as a trigger for the termination of an episode. \emph{Note: Advanced users who wish to remove this criteria altogether 
 #' should set the value of year\_turn equal to cum\_turn. 
@@ -40,8 +40,8 @@
 #' 
 #' @param cum_turn What is the amount of gradual change in the opposite direction to trigger the termination of an episode?
 #' An episode may end when the case begins moving in the opposite direction gradually. For example, 
-#' during an episode of democratization, a country may experience a gradual drop on the EDI over a number of years 
-#' that signals democratization has ended. This could also signal the onset of an autocratization episode. 
+#' during an episode of privatization, a country may experience a gradual drop on the EDI over a number of years 
+#' that signals privatization has ended. This could also signal the onset of an statization episode. 
 #' To avoid overlap between episodes, we set the absolute value of a gradual change in the opposite direction 
 #' on the EDI over the tolerance period (e.g. 5 years) as a trigger for the termination of an episode.
 #'
@@ -53,9 +53,9 @@
 #' This could lead to large changes in the composition of episodes. 
 #' We set the default to 5 years because this is the typical amount for an electoral cycle for most countries.}
 #'
-#' @return A data frame specifying episodes of regime transformation and their outcomes in the most recent V-Dem data set.
-#' For further details and explanations on episodes and outcomes please check the ERT codebook attached to the package 
-#' and available here: https://github.com/vdeminstitute/ERT/blob/master/inst/ERT_codebook.pdf
+#' @return A data frame specifying episodes of state ownership transformation and their outcomes in the most recent V-Dem data set.
+#' For further details and explanations on episodes and outcomes please check the ESOT codebook attached to the package 
+#' and available here: https://github.com/vdeminstitute/ESOT/blob/master/inst/ESOT_codebook.pdf
 #'
 #' @import dplyr
 #' @import stringr
@@ -71,16 +71,16 @@
 #' #episodes <- get_eps()
 #'
 ### set the parameters ###
-get_eps <- function(data = ERT::vdem,
-                    start_incl = 0.01,
-                    cum_incl = 0.1,
-                    year_turn = 0.03,    
-                    cum_turn = 0.1,
+get_eps <- function(data = ESOT::vdem,
+                    start_incl = 0.04,
+                    cum_incl = 0.4,
+                    year_turn = 0.12,    
+                    cum_turn = 0.4,
                     tolerance = 5)
 {
   
   if(year_turn == 0)
-    print("You set year_turn = 0. Did you mean to do this? Doing so means an episode ends when it experiences a year of no annual change on the EDI. Perhaps, instead, you meant to set its value equal to cum_turn. See p.3 of the ERT codebook.")
+    print("You set year_turn = 0. Did you mean to do this? Doing so means an episode ends when it experiences a year of no annual change on the EDI. Perhaps, instead, you meant to set its value equal to cum_turn. See p.3 of the ESOT codebook.")
   
  
   ### DATA CLEANING AND PREP ###
@@ -88,7 +88,7 @@ get_eps <- function(data = ERT::vdem,
   # selecting the variables we need to construct the episodes dataframe 
   full.df <- data %>%
     dplyr::select(country_name, country_id, country_text_id, year,
-                  v2x_polyarchy, codingstart, codingend, matches("v2x_polyarchy", ignore.case = FALSE),
+                  v2clstown, codingstart, codingend, matches("v2clstown", ignore.case = FALSE),
                   gapstart1, gapstart2, gapstart3, gapend1, gapend2, gapend3,
                   v2x_regime, matches("v2eltype", ignore.case = FALSE), v2elasmoff_ord) %>%
     dplyr::filter(year >= 1900) %>%
@@ -232,21 +232,21 @@ get_eps <- function(data = ERT::vdem,
     group_by(country_text_id) %>%
     
     
-    ### CODING THE DEMOCRATIZATION EPISODES ###
+    ### CODING THE privatization EPISODES ###
   
   # detect and save potential episodes with the help of the c++ function find_seqs
-  dplyr::mutate(episode_id = find_seqs_dem(v2x_polyarchy, v2x_regime, reg_trans,
+  dplyr::mutate(episode_id = find_seqs_dem(v2clstown, v2x_regime, reg_trans,
                                            start_incl, year_turn = year_turn * -1, cum_turn = cum_turn * -1,
                                            tolerance),
                 # set a temporary id for these potential episodes and group accordinly
                 character_id = ifelse(!is.na(episode_id), paste(country_text_id, episode_id, sep = "_"), NA)) %>%
     dplyr::ungroup() %>%
     dplyr::group_by(character_id) %>%
-    # general check: is there a potential democratization episode?
+    # general check: is there a potential privatization episode?
     dplyr::mutate(dem_ep = ifelse(!is.na(episode_id), 1, 0),
                   # we check whether the cumulated change in each potential episode was substantial (> cum_inc), 
                   # i.e. the episode is manifest
-                  dem_ep = ifelse(dem_ep==1 & max(v2x_polyarchy, na.rm = T) - min(v2x_polyarchy, na.rm = T) >= cum_incl, 1, 0)) %>%
+                  dem_ep = ifelse(dem_ep==1 & max(v2clstown, na.rm = T) - min(v2clstown, na.rm = T) >= cum_incl, 1, 0)) %>%
     dplyr::ungroup() %>%
     # then we clean out variables for non-manifest episodes
     dplyr::mutate(episode_id = ifelse(dem_ep!=1, NA, episode_id),
@@ -272,9 +272,9 @@ get_eps <- function(data = ERT::vdem,
     as.data.frame %>%
     
     
-    # code termination type of democratization episode
+    # code termination type of privatization episode
     
-    # democratization episodes end when one of five things happens:
+    # privatization episodes end when one of five things happens:
     # 0. the outcome is unknown
     # 1. stasis: the case experiences no annual increase = start_incl for the tolerance period (or more)
     # 2. year drop: the case experiences an annual drop <= year_turn
@@ -285,7 +285,7 @@ get_eps <- function(data = ERT::vdem,
   # first find the last positive change on EDI equal to the start_incl parameter
   # this will become the new end of episodes at some point, once we clean things up
   dplyr::group_by(dem_ep_id) %>%
-    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2x_polyarchy-dplyr::lag(v2x_polyarchy, n=1)>=start_incl, year, NA))),
+    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2clstown-dplyr::lag(v2clstown, n=1)>=start_incl, year, NA))),
                   # here we just replace with NA non-episode years
                   last_ch_year = ifelse(dem_ep==0, NA, last_ch_year)) %>%
     
@@ -316,7 +316,7 @@ get_eps <- function(data = ERT::vdem,
                   dem_ep_id = ifelse(dem_ep==1, paste(country_text_id, dem_ep_start_year, dem_ep_end_year, sep = "_"), NA)) %>%
     # then we can update our last_ch_year variable to reflect the new range of years for the episodes that terminated due to breakdown
     dplyr::group_by(dem_ep_id) %>%
-    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2x_polyarchy-dplyr::lag(v2x_polyarchy, n=1)>=start_incl, year, NA))),
+    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2clstown-dplyr::lag(v2clstown, n=1)>=start_incl, year, NA))),
                   # here we just replace with NA non-episode years
                   last_ch_year = ifelse(dem_ep==0, NA, last_ch_year)) %>%
     
@@ -330,7 +330,7 @@ get_eps <- function(data = ERT::vdem,
   # here we loop over the number of years (n) equal to the tolerance period after the last_change_year
   for (i in 1:tolerance) {
     # we calculate the first difference in the EDI for each of these yearly changes within the tolernce
-    year_drop[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2x_polyarchy, n=i)-dplyr::lead(full.df$v2x_polyarchy, n=i-1), NA)
+    year_drop[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2clstown, n=i)-dplyr::lead(full.df$v2clstown, n=i-1), NA)
   }
   # then we generate a dataframe from these calculations
   df1 <- do.call(cbind, lapply(year_drop, data.frame, stringsAsFactors=FALSE))
@@ -355,7 +355,7 @@ get_eps <- function(data = ERT::vdem,
   cum_drop <- list()
   # here we loop over time equal to the tolerance, looking for the difference between the last_change_year and that year on the EDI
   for (i in 1:tolerance) {
-    cum_drop[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2x_polyarchy, n=i)-full.df$v2x_polyarchy, NA)
+    cum_drop[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2clstown, n=i)-full.df$v2clstown, NA)
   }
   # then we rename the columns and generate a dataframe we can use for our existing data
   df <- do.call(cbind, lapply(cum_drop, data.frame, stringsAsFactors=FALSE))
@@ -456,19 +456,19 @@ get_eps <- function(data = ERT::vdem,
     dplyr::select(-stasis)
   
   
-  ### CODING THE AUTOCRATIZATION EPISODES ###
+  ### CODING THE statization EPISODES ###
   
   # detect and save potential episodes with the help of the c++ function find_seqs
-  full.df <- full.df %>% dplyr::mutate(episode_id = find_seqs_aut(v2x_polyarchy, v2x_regime, reg_trans,
+  full.df <- full.df %>% dplyr::mutate(episode_id = find_seqs_aut(v2clstown, v2x_regime, reg_trans,
                                                                   start_incl = start_incl * -1, year_turn, cum_turn, tolerance),
                                        # set a temporary id for these potential episodes and group accordinly
                                        character_id = ifelse(!is.na(episode_id), paste(country_text_id, episode_id, sep = "_"), NA)) %>%
     dplyr::ungroup() %>%
     dplyr::group_by(character_id) %>%
-    # general check: is there a potential autocratization episode?
+    # general check: is there a potential statization episode?
     dplyr::mutate(aut_ep = ifelse(!is.na(episode_id), 1, 0),
                   # we check whether the cumulated change in each potential episode was substantial (> cum_inc), i.e. the episode is manifest
-                  aut_ep = ifelse(aut_ep == 1 & min(hablar::s(v2x_polyarchy)) - max(hablar::s(v2x_polyarchy)) <= cum_incl*-1, 1, 0)) %>%
+                  aut_ep = ifelse(aut_ep == 1 & min(hablar::s(v2clstown)) - max(hablar::s(v2clstown)) <= cum_incl*-1, 1, 0)) %>%
     ungroup() %>%
     # then we clean out variables for non-manifest episodes
     dplyr::mutate(episode_id = ifelse(aut_ep != 1, NA, episode_id),
@@ -493,9 +493,9 @@ get_eps <- function(data = ERT::vdem,
     # just to make sure we have a dataframe
     as.data.frame %>%
     
-    # code termination type of autocratization episode
+    # code termination type of statization episode
     
-    # autocratization episodes end when one of five things happens:
+    # statization episodes end when one of five things happens:
     # 0. the episode outcome is unknown
     # 1. stasis: the case experiences no annual decrease = start_incl for the tolerance period (or more)
     # 2. year increase: the case experiences an annual increase >= year_turn
@@ -505,7 +505,7 @@ get_eps <- function(data = ERT::vdem,
     
   # first find the last negative change on EDI equal to the start_incl parameter
   group_by(aut_ep_id) %>%
-    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2x_polyarchy-dplyr::lag(v2x_polyarchy, n=1)<=start_incl*-1, year, NA))),
+    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2clstown-dplyr::lag(v2clstown, n=1)<=start_incl*-1, year, NA))),
                   # here we just replace with NA non-episode years
                   last_ch_year = ifelse(aut_ep==0, NA, last_ch_year)) %>%
     
@@ -535,7 +535,7 @@ get_eps <- function(data = ERT::vdem,
                   aut_ep_id = ifelse(aut_ep==1, paste(country_text_id, aut_ep_start_year, aut_ep_end_year, sep = "_"), NA)) %>%
     # then we can update our last_ch_year variable to reflect the new range of years for the episodes that terminated due to dem_trans
     dplyr::group_by(aut_ep_id) %>%
-    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2x_polyarchy-dplyr::lag(v2x_polyarchy, n=1)<=start_incl*-1, year, NA))),
+    dplyr::mutate(last_ch_year = max(hablar::s(ifelse(v2clstown-dplyr::lag(v2clstown, n=1)<=start_incl*-1, year, NA))),
                   # here we just replace with NA non-episode years
                   last_ch_year = ifelse(aut_ep==0, NA, last_ch_year)) %>%
     
@@ -550,7 +550,7 @@ get_eps <- function(data = ERT::vdem,
   # here we loop over the number of years (n) equal to the tolerance period after the last_change_year
   for (i in 1:tolerance) {
     # we calculate the first difference in the EDI for each of these yearly changes within the tolernce
-    year_incr[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2x_polyarchy, n=i)-dplyr::lead(full.df$v2x_polyarchy, n=i-1), NA)
+    year_incr[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2clstown, n=i)-dplyr::lead(full.df$v2clstown, n=i-1), NA)
   }
   # then we generate a dataframe from these calculations
   df1 <- do.call(cbind, lapply(year_incr, data.frame, stringsAsFactors=FALSE))
@@ -576,7 +576,7 @@ get_eps <- function(data = ERT::vdem,
   cum_incr <- list()
   # here we loop over time equal to the tolerance, looking for the difference between the last_change_year and that year on the EDI
   for (i in 1:tolerance) {
-    cum_incr[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2x_polyarchy, n=i)-full.df$v2x_polyarchy, NA)
+    cum_incr[[i]] <- ifelse(full.df$year == full.df$last_ch_year & dplyr::lead(full.df$country_id, n=i)==full.df$country_id, dplyr::lead(full.df$v2clstown, n=i)-full.df$v2clstown, NA)
   }
   # then we rename the columns and generate a dataframe we can use for our existing data
   df <- do.call(cbind, lapply(cum_incr, data.frame, stringsAsFactors=FALSE))
@@ -594,7 +594,7 @@ get_eps <- function(data = ERT::vdem,
     left_join(tibble::rownames_to_column(stasis, 'newid'), by = 'newid') %>%
     
     # now we can finally code our termination variable
-    # lets make sure to group by the autocratization episode and arrange by country-year
+    # lets make sure to group by the statization episode and arrange by country-year
     ungroup() %>%
     group_by(aut_ep_id) %>%
     dplyr::arrange(aut_ep_id, year) %>%
@@ -704,7 +704,7 @@ get_eps <- function(data = ERT::vdem,
     
     # select the variables we need to keep
     dplyr::filter(!is.na(origsample)) %>%
-    dplyr::select(country_id, country_text_id, country_name, year, v2x_regime, v2x_polyarchy, v2x_polyarchy_codelow, v2x_polyarchy_codehigh,
+    dplyr::select(country_id, country_text_id, country_name, year, v2x_regime, v2clstown, v2clstown_codelow, v2clstown_codehigh,
                   reg_start_year, reg_end_year, reg_id, reg_type, reg_trans, dem_founding_elec, aut_founding_elec, row_regch_event, row_regch_censored,
                   dem_ep, dem_ep_id, dem_ep_start_year, dem_ep_end_year, dem_pre_ep_year, dem_ep_termination,
                   #sub_dem_ep, sub_dem_ep_id, sub_dem_ep_start_year, sub_dem_ep_end_year, 

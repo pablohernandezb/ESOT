@@ -1,12 +1,12 @@
-#' Plot Episodes of State Ownership Transformation (ESOT) over time.
+#' Plot Episodes of Regime Transformation (ERT) over time.
 #'
 #' `plot_all` plots the global number/share of countries undergoing
-#'  privatization and statization Episodes of State Ownership Transformation (ESOT)
+#'  privatization and statization Episodes of Regime Transformation (ERT)
 #'  in a selected time frame.
 #'
 #' This function is a wrapper for [ggplot2:ggplot()] and produces a plot that shows
 #' privatization and statization episodes over time.
-#' The function calls the [ESOT:get_eps()] function to identify episodes.
+#' The function calls the [ERT:get_eps()] function to identify episodes.
 #'
 #'#' @param abs Logical value: if TRUE, the absolute number of countries in an episode for each year is plotted.
 #' If FALSE, the share of countries (in \%) undergoing privatization or statization is plotted.
@@ -53,6 +53,10 @@
 #' @import dplyr
 #' 
 #' @export
+#' 
+
+setwd("d:/Projects/ERT-1/my_test/")
+source("d:/Projects/ERT-1/R/get_eps.R")
 
 localizations <- list(
   en = list(
@@ -91,7 +95,7 @@ plot_all <- function(abs = T,
                      tolerance = 5,
                      lang = "en") {
   
-  eps <- get_eps(data = ESOT::vdem,
+  eps <- get_eps(data = ERT::vdem,
                   start_incl = start_incl,
                   cum_incl = cum_incl,
                   year_turn = year_turn,
@@ -114,7 +118,7 @@ plot_all <- function(abs = T,
   stopifnot(is.numeric(tolerance), length(tolerance) == 1)
   
   #perhaps this is redundant 
-  if(min(years)<min(ESOT::vdem$year) | max(years)>max(ESOT::vdem$year))
+  if(min(years)<min(ERT::vdem$year) | max(years)>max(ERT::vdem$year))
     get_label("no_data", lang)
   
   if (isTRUE(abs)) {
@@ -149,3 +153,5 @@ plot_all <- function(abs = T,
     p +  ylab(get_label("countries_percent", lang))
   }
 }
+
+plot_all(lang = "es")
