@@ -89,7 +89,7 @@ NumericVector find_seqs_dem(NumericVector v,
     if (i == d_len - 1 || tolerance_count == tolerance || NumericVector::is_na(d[i]) ||
         d[i] < year_turn|| change < cum_turn ||
         t[i+1] == -1) {
-
+          int head = q.front(), tail;
       // Include stasis period
       if (tolerance_count > 0)
         // If we're at the end of seq and it's not a stop value, we
