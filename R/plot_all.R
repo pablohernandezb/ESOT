@@ -57,8 +57,8 @@
 localizations <- list(
   en = list(
     year = "Year",
-    statization = "statization",
-    privatization = "privatization",
+    statization = "Statization",
+    privatization = "Privatization",
     number_countries = "Number of Countries",
     countries_percent = "Countries (%)",
     no_data = "Error: Data not available for time range",
@@ -75,7 +75,7 @@ localizations <- list(
   )
 )
 
-get_label <- function(key, lang = "es") {
+get_label <- function(key, lang = "en") {
   if (!lang %in% names(localizations)) lang <- "en"
   label <- localizations[[lang]][[key]]
   if (is.null(label)) return(key)
