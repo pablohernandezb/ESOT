@@ -20,7 +20,7 @@ using namespace std;
 //' parameters, etc.
 //'
 //[[Rcpp::export]]
-NumericVector find_seqs_aut(NumericVector v,
+NumericVector find_seqs_sta(NumericVector v,
                             NumericVector r,
                             NumericVector t,
                             double start_incl = -0.04,
@@ -60,7 +60,7 @@ NumericVector find_seqs_aut(NumericVector v,
   // total diff to zero since this if() statement only occurs at the
   // beginning of an episode.
   for (size_t i = 0; i < d_len; i++) {
-    // Note: this is different than in the find_seqs_dem since
+    // Note: this is different than in the find_seqs_pri since
     // start_incl is negative!
     if (d[i] <= start_incl) {
       q.push(i);
@@ -75,7 +75,7 @@ NumericVector find_seqs_aut(NumericVector v,
 
     // Increase the tolerance_count and the change count if there is
     // stasis. NOTE: here again, we change to > twice compared to the
-    // find_seqs_dem.
+    // find_seqs_pri.
     if (year_turn >= d[i] && d[i] > start_incl) {
       tolerance_count++;
       change += d[i];

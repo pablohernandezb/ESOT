@@ -235,7 +235,7 @@ get_eps <- function(data = ESOT::vdem,
     ### CODING THE privatization EPISODES ###
   
   # detect and save potential episodes with the help of the c++ function find_seqs
-  dplyr::mutate(episode_id = find_seqs_dem(v2clstown, v2x_regime, reg_trans,
+  dplyr::mutate(episode_id = find_seqs_pri(v2clstown, v2x_regime, reg_trans,
                                            start_incl, year_turn = year_turn * -1, cum_turn = cum_turn * -1,
                                            tolerance),
                 # set a temporary id for these potential episodes and group accordinly
@@ -459,7 +459,7 @@ get_eps <- function(data = ESOT::vdem,
   ### CODING THE statization EPISODES ###
   
   # detect and save potential episodes with the help of the c++ function find_seqs
-  full.df <- full.df %>% dplyr::mutate(episode_id = find_seqs_aut(v2clstown, v2x_regime, reg_trans,
+  full.df <- full.df %>% dplyr::mutate(episode_id = find_seqs_sta(v2clstown, v2x_regime, reg_trans,
                                                                   start_incl = start_incl * -1, year_turn, cum_turn, tolerance),
                                        # set a temporary id for these potential episodes and group accordinly
                                        character_id = ifelse(!is.na(episode_id), paste(country_text_id, episode_id, sep = "_"), NA)) %>%

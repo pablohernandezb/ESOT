@@ -19,7 +19,7 @@ using namespace std;
 //' parameters, etc.
 //'
 //[[Rcpp::export]]
-NumericVector find_seqs_dem(NumericVector v,
+NumericVector find_seqs_pri(NumericVector v,
                             NumericVector r,
                             NumericVector t,
                             double start_incl = 0.04,
