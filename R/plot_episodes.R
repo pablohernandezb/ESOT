@@ -643,7 +643,7 @@ plot_episodes <- function(years = c(1900, 2023),
                             labels = c(get_label("autocratization", lang), get_label("democratization", lang), get_label("overlap", lang)),
                             values = c("dashed", "dotted", "solid")) +
       scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
-      xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,1) +
+      xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,4) +
       theme_bw() +
       guides(color = guide_legend(override.aes = list(size = 0))) +
       ggtitle(get_country_name(country, lang))
@@ -691,7 +691,7 @@ plot_episodes <- function(years = c(1900, 2023),
     p <-ggplot2::ggplot() +
       geom_line(data = polyarchy, aes(x = as.numeric(year), y = v2clstown), alpha = 0.35) +
       scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
-      xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,1) +
+      xlab(get_label("year", lang)) +  ylab(get_label("edi", lang)) + ylim(0,4) +
       theme_bw() +
       ggtitle(get_country_name(country, lang))
     
