@@ -1,47 +1,46 @@
 
 
-An R package to load, explore, and work with the Episodes of Regime Transformation (ERT) dataset - a project of the [V-Dem Institute](https://www.v-dem.net/). This forked version includes support for localization in Spanish (`"es"`).
+An R package to load, explore, and work with Episodes of State Ownership Transformation (ESOT) using the V-Dem dataset—based on the original Episodes of Regime Transformation (ERT) project by the [V-Dem Institute](https://www.v-dem.net/). This forked version includes support for localization in Spanish (`"es"`) and uses the variable `v2clstown` (State Ownership of Economy) to identify episodes of privatization and statization.
 
-## Episodes of Regime Transformation (ERT) ##
+## Episodes of State Ownership Transformation (ESOT) ##
 
-#### Load, explore, and work with the ERT dataset (for details see also the [ERT Codebook](https://github.com/vdeminstitute/ERT/blob/master/inst/ERT_codebook.pdf)): ####
+#### Load, explore, and work with the ESOT dataset (for details see also the [ERT Codebook](https://github.com/vdeminstitute/ERT/blob/master/inst/ERT_codebook.pdf)): ####
 
-* NOTE: for non-R users we provide [the ERT dataset here as csv. or .xlsx file](https://github.com/vdeminstitute/ERT/blob/master/inst) - however, we recommend loading the ERT dataset via the package since one huge advantage of the package is that it allows to flexibly set parameters for generating the episodes.
-* RELEASES: ERT 15.0 is based on the V-Dem dataset v15. For earlier releases using earlier versions of the V-Dem dataset, see the "Releases" column on the right sight. 
+* NOTE: For non-R users, we provide [the V-Dem dataset as csv or .xlsx file](https://github.com/vdeminstitute/ERT/blob/master/inst). However, we recommend loading the dataset via the package to flexibly set parameters for generating episodes.
+* RELEASES: This package is based on the V-Dem dataset v15. For earlier releases, see the "Releases" section in the original repository.
 
 #### Functions ####
-* `get_eps`: Identify episodes of regime transitions (autocratization, democratization) in the most recent V-dem data set. Autocratization is defined as any movement towards autocracy which starts within democracies or autocracies [(cf. Maerz et al., Journal of Peace Research, 2023](https://journals.sagepub.com/doi/10.1177/00223433231168192) and [Lührmann and Lindberg, Democratization, 2019)](https://www.tandfonline.com/doi/full/10.1080/13510347.2019.1582029). Democratization is defined as any movement towards democracy which starts in autocracies or democracies [(cf. Wilson et al., 2022)](https://www.cambridge.org/core/journals/political-science-research-and-methods/article/episodes-of-liberalization-in-autocracies-a-new-approach-to-quantitatively-studying-democratization/CD86064BF11FEEC8BD9354921E3C9BE3)
-* `find_overlap`: Find potential overlaps between episodes of democratization and autocratization which may occur depending on how the thresholds are set.
-* `plot_episodes`: Plot Episodes of Regime Transitions (ERT) over time for a selected country.
-* `plot_all`: Plot share or absolute number of all countries in Episodes of Regime Transitions (ERT) over time.
+* `get_eps`: Identify episodes of state ownership transformation (privatization and statization) in the most recent V-Dem data set, using the `v2clstown` variable. Privatization is defined as any movement towards less state ownership, while statization is any movement towards more state ownership.
+* `find_overlap`: Find potential overlaps between episodes of privatization and statization, depending on how the thresholds are set.
+* `plot_episodes`: Plot episodes of state ownership transformation over time for a selected country.
+* `plot_all`: Plot the share or absolute number of all countries in episodes of state ownership transformation over time.
 
 #### ShinyApp for validity tests ####
 
-* For additional transparency, we provide a [ShinyApp for validation](https://episodes.shinyapps.io/validation/) which allows users to flexibly adjust the ERT parameters and to test how changes to the default thresholds affect the episodes and their validity.
+* For additional transparency, we provide a [ShinyApp for validation](https://episodes.shinyapps.io/validation/) which allows users to flexibly adjust the ESOT parameters and test how changes to the default thresholds affect the episodes and their validity.
 
 ## Installation ##
 
-```
-# Install the development version of the ERT package 
+```r
+# Install the development version of the ESOT package 
 # (this package is an ongoing project, 
 # keep checking for updates)
 
 # First, you need to have the devtools package installed
 install.packages("devtools")
-# now, install the ERT package directly from GitHub
-devtools::install_github("pablohernandezb/ERT")
+# now, install the package directly from GitHub
+devtools::install_github("pablohernandezb/ESOT")
 
-# NOTE: make sure you have an updated R version and
+# NOTE: Make sure you have an updated R version and
 # - since the package is a development version - 
 # an updated version of xcode (Mac), rtools (Windows), r-base-dev (Linux)
 # installed. If you have troubles with the installation 
 # write to contact@v-dem.net at the V-Dem Institute.
-
 ```
 
 ## Localization ##
 
-This fork of the ERT package supports localization for plot labels and country names in English (`"en"`) and Spanish (`"es"`). You can set the language for labels and country names using the `lang` argument in plotting functions. It is not mandatory to include the `lang` argument, the default is set to be English (`"en"`).
+This fork supports localization for plot labels and country names in English (`"en"`) and Spanish (`"es"`). You can set the language for labels and country names using the `lang` argument in plotting functions. The default is English (`"en"`).
 
 #### Internal Functions ####
 
@@ -49,12 +48,20 @@ This fork of the ERT package supports localization for plot labels and country n
 * `get_country_name`: Retrieve localized country names for use in plots and summaries.
 
 **Example:**
-```
-# Plot all episodes of democratization and autocratization in Spanish
+```r
+# Plot all episodes of privatization and statization in Spanish
 plot_all(lang = "es")
 
-# Plot the democratization and autocratization episodes for Venezuela in Spanish
-plot_episodes_test(country = c("Venezuela"), years = c(1900, 2023), lang = "es")
+# Plot the privatization and statization episodes for Venezuela in Spanish
+plot_episodes(country = c("Venezuela"), years = c(1900, 2023), lang = "es")
 ```
 
-For more details, see the documentation. Feel free to reach out <hi@pablohernandezb.dev> if you have any recommendations, comments or questions!
+## Citation ##
+
+If you use this package, please cite the creators of the ERT dataset:
+
+- Lührmann, Anna, and Staffan I. Lindberg. "A third wave of autocratization is here: what is new about it?" Democratization 26.7 (2019): 1095-1113. [Link](https://www.tandfonline.com/doi/full/10.1080/13510347.2019.1582029)
+- Maerz, Seraphine F., et al. "Episodes of Regime Transformation (ERT): A new dataset for studying democratization and autocratization." Journal of Peace Research 60.4 (2023): 681-695. [Link](https://journals.sagepub.com/doi/10.1177/00223433231168192)
+- Wilson, Matthew Charles, et al. "Episodes of liberalization in autocracies: A new approach to quantitatively studying democratization." Political Science Research and Methods 10.2 (2022): 279-296. [Link](https://www.cambridge.org/core/journals/political-science-research-and-methods/article/episodes-of-liberalization-in-autocracies-a-new-approach-to-quantitatively-studying-democratization/CD86064BF11FEEC8BD9354921E3C9BE3)
+
+For more details, see the documentation. Feel free to reach out <hi@pablohernandezb.dev> if you have any recommendations, comments, or questions!
