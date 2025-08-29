@@ -641,7 +641,7 @@ plot_episodes <- function(years = c(1900, 2023),
       print(get_label("warning_overlap", lang))
     }
     
-    p <-   ggplot2::ggplot() +
+    p <- ggplot2::ggplot() +
       ggplot2::geom_line(data = eps_year, ggplot2::aes(group = .data$episode_id, color = .data$episode_id, linetype = .data$ep_type,x = .data$year, y = .data$v2clstown_osp)) +
       ggplot2::geom_line(data = polyarchy, ggplot2::aes(x = .data$year, y = .data$v2clstown_osp), alpha = 0.35) +
       ggplot2::scale_colour_grey(breaks = levels(factor(eps_year$episode_id[eps_year$episode_id!="overlaps"])),
@@ -650,14 +650,14 @@ plot_episodes <- function(years = c(1900, 2023),
                                      labels = c(get_label("statization", lang), get_label("privatization", lang), get_label("overlap", lang)),
                                      values = c("dashed", "dotted", "solid")) +
       ggplot2::scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
-      ggplot2::xlab(get_label("year", lang)) +  ggplot2::ylab(get_label("soe", lang)) + ggplot2::ylim(0,4) +
+      ggplot2::xlab(get_label("year", lang)) + ggplot2::ylab(get_label("soe", lang)) + ggplot2::ylim(0,4) +
       ggplot2::theme_bw() +
       ggplot2::guides(color = ggplot2::guide_legend(override.aes = list(size = 0))) +
       ggplot2::ggtitle(get_country_name(country, lang))
     
     if (isTRUE(length(which(eps_year$ep_type == "priv_ep_id")) > 0)){
       if (any(eps_year$year%in%c(eps_year$priv_ep_start_year))) {
-        p <- p +  ggplot2::geom_point(data = eps_year, ggplot2::aes(x = .data$year, y = ifelse(.data$year == .data$priv_ep_start_year, .data$v2clstown_osp, NA)), shape = 2, alpha = 0.75)
+        p <- p + ggplot2::geom_point(data = eps_year, ggplot2::aes(x = .data$year, y = ifelse(.data$year == .data$priv_ep_start_year, .data$v2clstown_osp, NA)), shape = 2, alpha = 0.75)
       } else {
         p
       }
@@ -670,7 +670,7 @@ plot_episodes <- function(years = c(1900, 2023),
     
     if (isTRUE(length(which(eps_year$ep_type == "stat_ep_id")) > 0)) {
       if (any(eps_year$year%in%c(eps_year$stat_ep_start_year))){
-        p <- p +  ggplot2::geom_point(data = eps_year, ggplot2::aes(x = .data$year, y = ifelse(.data$year == .data$stat_ep_start_year, .data$v2clstown_osp, NA)), shape = 1, alpha = 0.75)
+        p <- p + ggplot2::geom_point(data = eps_year, ggplot2::aes(x = .data$year, y = ifelse(.data$year == .data$stat_ep_start_year, .data$v2clstown_osp, NA)), shape = 1, alpha = 0.75)
       } else {
         p
       }
@@ -692,7 +692,7 @@ plot_episodes <- function(years = c(1900, 2023),
     p <-ggplot2::ggplot() +
       ggplot2::geom_line(data = polyarchy, ggplot2::aes(x = as.numeric(.data$year), y = .data$v2clstown_osp), alpha = 0.35) +
       ggplot2::scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
-      ggplot2::xlab(get_label("year", lang)) +  ggplot2::ylab(get_label("soe", lang)) + ggplot2::ylim(0,4) +
+      ggplot2::xlab(get_label("year", lang)) + ggplot2::ylab(get_label("soe", lang)) + ggplot2::ylim(0,4) +
       ggplot2::theme_bw() +
       ggplot2::ggtitle(get_country_name(country, lang))
     p
