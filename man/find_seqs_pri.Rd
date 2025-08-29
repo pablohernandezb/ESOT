@@ -2,15 +2,15 @@
 % Please edit documentation in R/RcppExports.R
 \name{find_seqs_pri}
 \alias{find_seqs_pri}
-\title{Identify sequences of potential democratization episodes}
+\title{Identify sequences of potential privatization episodes}
 \usage{
 find_seqs_pri(
   v,
   r,
   t,
-  start_incl = 0.01,
-  year_turn = -0.03,
-  cum_turn = -0.1,
+  start_incl = 0.04,
+  year_turn = -0.12,
+  cum_turn = -0.4,
   tolerance = 5L
 )
 }

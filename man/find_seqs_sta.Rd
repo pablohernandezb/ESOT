@@ -2,20 +2,20 @@
 % Please edit documentation in R/RcppExports.R
 \name{find_seqs_sta}
 \alias{find_seqs_sta}
-\title{Identify sequences of potential autocratization episodes}
+\title{Identify sequences of potential statization episodes}
 \usage{
 find_seqs_sta(
   v,
   r,
   t,
-  start_incl = -0.01,
-  year_turn = 0.03,
-  cum_turn = 0.1,
+  start_incl = -0.04,
+  year_turn = 0.12,
+  cum_turn = 0.4,
   tolerance = 5L
 )
 }
 \description{
-This is a subfunction (c++) of ERT::get_eps see the
-documentation of ERT::get_aut (?get_eps) for details on
+This is a subfunction (c++) of ESOT::get_eps see the
+documentation of ESOT::get_aut (?get_eps) for details on
 parameters, etc.
 }

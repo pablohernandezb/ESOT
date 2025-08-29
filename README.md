@@ -1,6 +1,6 @@
 
 
-An R package to load, explore, and work with Episodes of State Ownership Transformation (ESOT) using the V-Dem dataset—based on the original Episodes of Regime Transformation (ERT) project by the [V-Dem Institute](https://www.v-dem.net/). This forked version includes support for localization in Spanish (`"es"`) and uses the variable `v2clstown` (State Ownership of Economy) to identify episodes of privatization and statization.
+An R package to load, explore, and work with Episodes of State Ownership Transformation (ESOT) using the V-Dem dataset—based on the original Episodes of Regime Transformation (ERT) project by the [V-Dem Institute](https://www.v-dem.net/). This forked version includes support for localization in Spanish (`"es"`) and uses the variable `v2clstown_osp` (State Ownership of Economy) to identify episodes of privatization and statization.
 
 ## Episodes of State Ownership Transformation (ESOT) ##
 
@@ -10,7 +10,7 @@ An R package to load, explore, and work with Episodes of State Ownership Transfo
 * RELEASES: This package is based on the V-Dem dataset v15. For earlier releases, see the "Releases" section in the original repository.
 
 #### Functions ####
-* `get_eps`: Identify episodes of state ownership transformation (privatization and statization) in the most recent V-Dem data set, using the `v2clstown` variable. Privatization is defined as any movement towards less state ownership, while statization is any movement towards more state ownership.
+* `get_eps`: Identify episodes of state ownership transformation (privatization and statization) in the most recent V-Dem data set, using the `v2clstown_osp` variable. Privatization is defined as any movement towards less state ownership, while statization is any movement towards more state ownership.
 * `find_overlap`: Find potential overlaps between episodes of privatization and statization, depending on how the thresholds are set.
 * `plot_episodes`: Plot episodes of state ownership transformation over time for a selected country.
 * `plot_all`: Plot the share or absolute number of all countries in episodes of state ownership transformation over time.

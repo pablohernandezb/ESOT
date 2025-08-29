@@ -2,8 +2,7 @@
 
 export(find_overlap)
 export(get_eps)
-export(plot_all)
-export(plot_episodes)
+export(localizations)
 import(Rcpp)
 import(dplyr)
 import(ggplot2)

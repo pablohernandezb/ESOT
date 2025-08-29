@@ -82,7 +82,7 @@ get_label <- function(key, lang = "en") {
   label
 }
 
-plot_all <- function(abs = T,
+plot_all <- function(abs = TRUE,
                      years = c(1900, 2023),
                      start_incl  = 0.04,
                      cum_incl  = 0.4,
@@ -91,6 +91,7 @@ plot_all <- function(abs = T,
                      tolerance = 5,
                      lang = "en") {
   
+  # Fetch episodes data
   eps <- get_eps(data = ESOT::vdem,
                   start_incl = start_incl,
                   cum_incl = cum_incl,
@@ -99,53 +100,56 @@ plot_all <- function(abs = T,
                   tolerance = tolerance)
   
   
+  # --- Input Validation (same as original) ---
   stopifnot(is.logical(abs), length(abs) == 1)
-  
   stopifnot(is.numeric(years), length(years) == 2, years[2] > years[1])
-  
   stopifnot(is.numeric(start_incl), length(start_incl) == 1)
-  
   stopifnot(is.numeric(cum_incl), length(cum_incl) == 1)
-  
   stopifnot(is.numeric(year_turn), length(year_turn) == 1)
-  
   stopifnot(is.numeric(cum_turn), length(cum_turn) == 1)
-  
   stopifnot(is.numeric(tolerance), length(tolerance) == 1)
   
-  #perhaps this is redundant 
-  if(min(years)<min(ESOT::vdem$year) | max(years)>max(ESOT::vdem$year))
+  # Check for data range
+  if(min(years) < min(ESOT::vdem$year) | max(years) > max(ESOT::vdem$year)) {
     get_label("no_data", lang)
+  }
   
+  # --- Refactored Plotting Logic ---
+  
+  # Use new variable names 'priv_ep' and 'stat_ep'
   if (isTRUE(abs)) {
     eps_year <- eps %>%
-      dplyr::filter(between(year, min(years), max(years))) %>%
-      {if(nrow(.) == 0) stop(get_label("no_episodes", lang)) else .} %>% 
-      dplyr::group_by(year) %>%
-      dplyr::summarise(dem_eps = sum(dem_ep),
-                       aut_eps = sum(aut_ep)) %>%
-      tidyr::pivot_longer(cols = c(dem_eps, aut_eps), names_to = "ep_type", values_to = "countries")
+      dplyr::filter(dplyr::between(.data$year, min(years), max(years))) %>%
+      {if(nrow(.) == 0) stop(get_label("no_episodes", lang)) else .} %>%
+      dplyr::group_by(.data$year) %>%
+      dplyr::summarise(priv_eps = sum(.data$priv_ep),
+                       stat_eps = sum(.data$stat_ep)) %>%
+      tidyr::pivot_longer(cols = c(.data$priv_eps, .data$stat_eps), names_to = "ep_type", values_to = "countries")
     
   } else {
     eps_year <- eps %>%
-      dplyr::filter(between(year, min(years), max(years))) %>%
-      dplyr::group_by(year) %>%
-      dplyr::summarise(dem_eps = sum(dem_ep) / length(unique(country_id)),
-                       aut_eps = sum(aut_ep) / length(unique(country_id))) %>%
-      tidyr::pivot_longer(cols = c(dem_eps, aut_eps), names_to = "ep_type", values_to = "countries")
+      dplyr::filter(dplyr::between(.data$year, min(years), max(years))) %>%
+      {if(nrow(.) == 0) stop(get_label("no_episodes", lang)) else .} %>%
+      dplyr::group_by(.data$year) %>%
+      dplyr::summarise(priv_eps = sum(.data$priv_ep) / length(unique(eps$country_id)),
+                       stat_eps = sum(.data$stat_ep) / length(unique(eps$country_id))) %>%
+      tidyr::pivot_longer(cols = c(.data$priv_eps, .data$stat_eps), names_to = "ep_type", values_to = "countries")
   }
   
-  p <-  ggplot2::ggplot(data = eps_year, aes(x = year, y = countries, group = ep_type, linetype = ep_type)) +
-    geom_line() +
-    scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
-    scale_linetype(name = "", breaks = c("aut_eps", "dem_eps"), labels = c(get_label("statization", lang), get_label("privatization", lang))) +
-    xlab(get_label("year", lang)) +
-    theme_classic() +
-    theme(legend.position = "bottom")
+  # --- Plotting the Data ---
+  
+  p <- ggplot2::ggplot(data = eps_year, ggplot2::aes(x = .data$year, y = .data$countries, group = .data$ep_type, linetype = .data$ep_type)) +
+    ggplot2::geom_line() +
+    ggplot2::scale_x_continuous(breaks = seq(round(min(years) / 10) * 10, round(max(years) / 10) * 10, 10)) +
+    # Update labels to reflect new episode types
+    ggplot2::scale_linetype(name = "", breaks = c("stat_eps", "priv_eps"), labels = c(get_label("statization", lang), get_label("privatization", lang))) +
+    ggplot2::xlab(get_label("year", lang)) +
+    ggplot2::theme_classic() +
+    ggplot2::theme(legend.position = "bottom")
   
   if (isTRUE(abs)) {
-    p +  ylab(get_label("number_countries", lang))
-  }  else {
-    p +  ylab(get_label("countries_percent", lang))
+    p + ggplot2::ylab(get_label("number_countries", lang))
+  } else {
+    p + ggplot2::ylab(get_label("countries_percent", lang))
   }
 }

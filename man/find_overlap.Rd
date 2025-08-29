@@ -2,29 +2,29 @@
 % Please edit documentation in R/find_overlap.R
 \name{find_overlap}
 \alias{find_overlap}
-\title{Find the overlap between episodes of democratization and autocratization.}
+\title{Find the overlap between episodes of privatization and statization.}
 \usage{
 find_overlap(
-  start_incl = 0.01,
-  cum_incl = 0.1,
-  year_turn = 0.03,
-  cum_turn = 0.1,
+  start_incl = 0.04,
+  cum_incl = 0.4,
+  year_turn = 0.12,
+  cum_turn = 0.4,
   tolerance = 5
 )
 }
 \arguments{
-\item{episodes}{The outcome of get_eps(), Episodes of Regime Transformation (ERT), 
+\item{episodes}{The outcome of get_eps(), Episodes of State Ownership Transformation (ESOT), 
 to be used for finding potential overlaps (depending on individual parameter setting). By default with standard parameters.}
 }
 \value{
-A summary message and data frame showing the overlaps between democratization and autocratization episodes.
+A summary message and data frame showing the overlaps between privatization and statization episodes.
 }
 \description{
-Find the overlap between episodes of democratization and autocratization.
+Find the overlap between episodes of privatization and statization.
 }
 \examples{
 #Don't run
-#Find the overlap between democratization and autocratization episodes
+#Find the overlap between privatization and statization episodes
 
 #overlap <- find_overlap(episodes)
 
