@@ -1,0 +1,15 @@
+citHeader("To cite the vdemdata R package in publications use:")
+
+citEntry(
+  entry    = "misc",
+  title    = "{ERT - Episodes of Regime Transformation R package}",
+  author   = personList(as.person("Seraphine Maerz"),
+         as.person("Amanda Edgell"),
+         as.person("Joshua Krusell"),
+         as.person("Laura Maxwell"),
+         as.person("Sebastian Hellmeier")),
+  institution = "Varieties of Democracy (V-Dem) Project",
+  year     = 2025,
+  url      = "https://github.com/vdeminstitute/ERT",
+  textVersion = "Seraphine Maerz, Amanda Edgell, Joshua Krusell, Laura Maxwell, Sebastian Hellmeier. 'ERT - Episodes of Regime Transformation R package'. Varieties of Democracy (V-Dem) Project. 2025. https://www.v-dem.net/en/ and https://github.com/vdeminstitute/ERT"
+)

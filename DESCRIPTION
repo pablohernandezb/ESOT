@@ -1,0 +1,30 @@
+Package: ESOT
+Type: Package
+Title: Episodes of State Ownership Transformation
+Version: 0.1.0
+Authors@R: c(person("Seraphine", "Maerz", email = "maerz@soz.uni-frankfurt.de", role = c("aut", "cre")),
+             person("Amanda", "Edgell", email = "amanda.edgell@v-dem.net", role = c("aut")),
+             person("Joshua", "Krusell", email = "js.shirin@gmail.com", role = c("aut")),
+             person("Laura", "Maxwell", email = "laura.maxwell@v-dem.net", role = c("aut")),
+             person("Sebastian", "Hellmeier", email = "sebastian.hellmeier@v-dem.net", role = c("aut")))
+Maintainer: Seraphine Maerz <maerz@soz.uni-frankfurt.de>
+Description: This package identifies Episodes of State Ownership Transformation (ESOT) using
+             the V-Dem variable v2clstown_osp. It detects privatization and statization episodes.
+Depends: R (>= 3.5.0)
+Imports:
+  Rcpp,
+  dplyr,
+  tidyr,
+  ggplot2,
+  stringr,
+  hablar,
+  plm,
+  tidyselect
+Suggests:
+    testthat (>= 3.0.0)
+LinkingTo: Rcpp
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Config/testthat/edition: 3
