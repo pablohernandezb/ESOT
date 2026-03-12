@@ -12,7 +12,7 @@ An R package to identify, explore, and visualize **Episodes of State Ownership T
 # Install the development version from GitHub
 # (requires the devtools package)
 install.packages("devtools")
-devtools::install_github("your-username/ESOT")
+devtools::install_github("pablohernandezb/ESOT")
 ```
 
 > Make sure you have an up-to-date R installation and the appropriate build tools:
