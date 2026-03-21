@@ -134,8 +134,13 @@ get_eps <- function(data = ESOT::vdem,
                   # censored near gap
                   econ_regch_censored = ifelse(!is.na(gapstart) & gapstart - econ_regch_year < tolerance, 1, econ_regch_censored),
                   # here we check if a transition to market economy was sustained
-                  mkt_trans_dum = ifelse(econ_regch_event == 1 &
-                                          any(econ_type >= 2 & year >= econ_regch_year), 1, NA),
+                  # mkt_stabilized: econ_type stayed at 2 (market-dominated mixed) for tolerance years
+                  mkt_stabilized = min(hablar::s(ifelse(econ_type == 2 & year == econ_regch_year &
+                                                          dplyr::lead(econ_type == 2, n = tolerance), 1, NA))),
+                  # mkt_opened: econ_type reached 3 (full market economy) at some point
+                  mkt_opened = ifelse(econ_regch_event == 1, max(hablar::s(econ_type)) - 2, NA),
+                  mkt_trans_dum = ifelse(econ_regch_event == 1 & ((!is.na(mkt_stabilized) & mkt_stabilized == 1) |
+                                                                    (!is.na(mkt_opened) & mkt_opened >= 1)), 1, NA),
                   mkt_trans_dum = ifelse(econ_regch_event == 1 & is.na(mkt_trans_dum), 0, mkt_trans_dum),
                   econ_regch_censored = ifelse(!is.na(mkt_trans_dum) & mkt_trans_dum == 1, 0, econ_regch_censored),
                   mkt_trans_dum = ifelse(econ_regch_censored == 1 & mkt_trans_dum == 0, NA, mkt_trans_dum),

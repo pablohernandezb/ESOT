@@ -36,36 +36,8 @@
 #'
 #' @export
 
-localizations <- list(
-  en = list(
-    year = "Year",
-    statization = "Statization",
-    privatization = "Privatization",
-    number_countries = "Number of Countries",
-    countries_percent = "Countries (%)",
-    no_data = "Error: Data not available for time range",
-    no_episodes = "No episodes during selected period."
-  ),
-  es = list(
-    year = "Año",
-    statization = "Estatización",
-    privatization = "Privatización",
-    number_countries = "Número de países",
-    countries_percent = "Países (%)",
-    no_data = "Error: Datos no disponibles para el rango de tiempo",
-    no_episodes = "No hay episodios durante el período seleccionado."
-  )
-)
-
-get_label <- function(key, lang = "es") {
-  if (!lang %in% names(localizations)) lang <- "en"
-  label <- localizations[[lang]][[key]]
-  if (is.null(label)) return(key)
-  label
-}
-
 plot_all <- function(abs = T,
-                     years = c(1900, 2023),
+                     years = c(1900, 2024),
                      start_incl  = 0.04,
                      cum_incl  = 0.4,
                      year_turn = 0.12,
@@ -111,8 +83,8 @@ plot_all <- function(abs = T,
     eps_year <- eps %>%
       dplyr::filter(between(year, min(years), max(years))) %>%
       dplyr::group_by(year) %>%
-      dplyr::summarise(priv_eps = sum(priv_ep) / length(unique(country_id)),
-                       stat_eps = sum(stat_ep) / length(unique(country_id))) %>%
+      dplyr::summarise(priv_eps = sum(priv_ep) / length(unique(country_id)) * 100,
+                       stat_eps = sum(stat_ep) / length(unique(country_id)) * 100) %>%
       tidyr::pivot_longer(cols = c(priv_eps, stat_eps), names_to = "ep_type", values_to = "countries")
   }
 

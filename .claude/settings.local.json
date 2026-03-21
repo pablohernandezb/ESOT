@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc -l /d/projects/ESOTv2/R/*.R)"
+      "Bash(wc -l /d/projects/ESOTv2/R/*.R)",
+      "Bash(\"C:/Program Files/R/R-4.4.3/bin/Rscript.exe\" -e \"library\\(devtools\\); clean_dll\\(\\); load_all\\(\\); eps <- get_eps\\(\\); cat\\(''done\\\\n''\\)\")",
+      "Bash(\"C:/Program Files/R/R-4.4.3/bin/Rscript.exe\" -e \":*)",
+      "Bash(\"C:/Program Files/R/R-4.4.3/bin/Rscript.exe\" inst/check_outcomes.R)",
+      "Bash(\"C:/Program Files/R/R-4.4.3/bin/Rscript.exe\" inst/check_outcomes2.R)",
+      "Bash(\"C:/Program Files/R/R-4.4.3/bin/Rscript.exe\" inst/check_mkt_trans.R)",
+      "Bash(\"C:/Program Files/R/R-4.4.3/bin/Rscript.exe\" inst/generate_episodes_md.R)"
     ]
   }
 }

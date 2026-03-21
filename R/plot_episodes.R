@@ -81,7 +81,10 @@ localizations <- list(
     outcome_stat_preempted = "Preempted market collapse",
     outcome_stat_diminished = "Diminished market economy",
     outcome_stat_averted = "Averted statization",
-    outcome_stat_regressed = "Deepened planned economy"
+    outcome_stat_regressed = "Deepened planned economy",
+    number_countries = "Number of Countries",
+    countries_percent = "Countries (%)",
+    no_data = "Error: Data not available for time range"
   ),
   es = list(
     episode = "Episodio",
@@ -114,7 +117,10 @@ localizations <- list(
     outcome_stat_preempted = "Colapso del mercado prevenido",
     outcome_stat_diminished = "Economía de mercado disminuida",
     outcome_stat_averted = "Estatización evitada",
-    outcome_stat_regressed = "Economía planificada profundizada"
+    outcome_stat_regressed = "Economía planificada profundizada",
+    number_countries = "Número de países",
+    countries_percent = "Países (%)",
+    no_data = "Error: Datos no disponibles para el rango de tiempo"
   )
 )
 

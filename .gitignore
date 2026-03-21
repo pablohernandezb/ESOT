@@ -21,6 +21,15 @@ data-raw/
 # Test artifacts
 my_tests/
 
+# Scratch/exploration scripts
+inst/check_*.R
+inst/test_*.R
+inst/generate_*.R
+inst/episodes_by_outcome.md
+
+# Claude Code
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
