@@ -142,7 +142,7 @@ Both `plot_episodes()` and `plot_all()` support localized labels via the `lang` 
 If you use the ESOT package, please cite both this package and the original ERT framework on which it is based:
 
 **ESOT package:**
-> Maerz, Seraphine, Amanda Edgell, Joshua Krusell, Laura Maxwell, and Sebastian Hellmeier. *ESOT — Episodes of State Ownership Transformation R package*. 2025.
+> Hernandez-Borges, Pablo. *ESOT — Episodes of State Ownership Transformation R package*. 2025.
 
 **Original ERT framework (required credit):**
 > Maerz, Seraphine, Amanda Edgell, Joshua Krusell, Laura Maxwell, and Sebastian Hellmeier. *ERT — Episodes of Regime Transformation R package*. Varieties of Democracy (V-Dem) Project. 2025. <https://github.com/vdeminstitute/ERT>
