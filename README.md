@@ -56,8 +56,8 @@ episodes <- get_eps(start_incl = 0.04,
 
 **Parameters** (all scaled to the 0–4 range of `v2clstown_osp`, following ERT's methodology):
 
-| Parameter    | Description                                                          | Default |
-|--------------|----------------------------------------------------------------------|---------|
+| Parameter    | Description                                                         | Default |
+|--------------|---------------------------------------------------------------------|---------|
 | `start_incl` | Minimum annual change to trigger an episode onset                   | `0.04`  |
 | `cum_incl`   | Minimum cumulative change to qualify as a manifest episode          | `0.4`   |
 | `year_turn`  | Annual change in opposite direction to trigger episode termination  | `0.12`  |
